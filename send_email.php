@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Destinataires
         $mail->setFrom($email, $name);
-        $mail->addAddress($config['smtp_username']); // Remplacez par votre adresse email
+        $mail->addAddress("nicolas.saint-leger@universite-paris-saclay.fr"); // Remplacez par votre adresse email
 
         // Contenu de l'email
         $mail->isHTML(false);
