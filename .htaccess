@@ -1,8 +1,0 @@
-# Rediriger index.html vers fr.html
-RewriteEngine On
-RewriteRule ^index\.html$ /fr.html [R=301,L]
-
-# Réécrire les URL pour masquer les extensions .html
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME}\.html -f
-RewriteRule ^([^/]+)$ $1.html [L]
