@@ -26,7 +26,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         } else {
             // Récupérer et afficher la dernière erreur PHP
             $error = error_get_last();
-            echo "Erreur lors de l'envoi du message. Détails de l'erreur : " . $error['message'];
+            if ($error !== null) {
+                echo "Erreur lors de l'envoi du message. Détails de l'erreur : " . $error['message'];
+            } else {
+                echo "Erreur lors de l'envoi du message. Aucune information d'erreur disponible.";
+            }
         }
     } else {
         echo "Veuillez remplir tous les champs.";
