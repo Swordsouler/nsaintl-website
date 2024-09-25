@@ -56,8 +56,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->send();
 
         // Rediriger vers la racine du site
-        //header('Location: /');
-        exit("Message envoyé avec succès.");
+        header('Location: /');
+        exit;
     } catch (Exception $e) {
         echo "Échec de l'envoi du message. Erreur: {$mail->ErrorInfo}";
     }
