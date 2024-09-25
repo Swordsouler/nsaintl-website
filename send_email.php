@@ -4,6 +4,9 @@ require 'PHPMailer-master/src/Exception.php';
 require 'PHPMailer-master/src/PHPMailer.php';
 require 'PHPMailer-master/src/SMTP.php';
 
+// Inclure le fichier de configuration
+$config = require 'config.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -29,16 +32,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         // Paramètres du serveur
         $mail->isSMTP();
-        $mail->Host = 'smtp.example.com'; // Remplacez par votre serveur SMTP
+        $mail->Host = $config['smtp_host'];
         $mail->SMTPAuth = true;
-        $mail->Username = 'votre_email@example.com'; // Remplacez par votre adresse email
-        $mail->Password = 'votre_mot_de_passe'; // Remplacez par votre mot de passe
+        $mail->Username = $config['smtp_username'];
+        $mail->Password = $config['smtp_password'];
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+        $mail->Port = $config['smtp_port'];
 
         // Destinataires
         $mail->setFrom($email, $name);
-        $mail->addAddress('votre_email@example.com'); // Remplacez par votre adresse email
+        $mail->addAddress($config['smtp_username']); // Remplacez par votre adresse email
 
         // Contenu de l'email
         $mail->isHTML(false);
