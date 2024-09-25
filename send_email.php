@@ -49,12 +49,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Contenu de l'email
         $mail->isHTML(false);
-        $mail->Subject = "Nouveau message de $name";
+        $mail->Subject = "[CONTACT] $name";
         $mail->Body    = $message;
 
         // Envoyer l'email
         $mail->send();
-        echo "Message envoyé avec succès.";
     } catch (Exception $e) {
         echo "Échec de l'envoi du message. Erreur: {$mail->ErrorInfo}";
     }
