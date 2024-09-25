@@ -1,4 +1,12 @@
 <?php
+// Inclure les fichiers PHPMailer manuellement
+require 'PHPMailer-master/src/Exception.php';
+require 'PHPMailer-master/src/PHPMailer.php';
+require 'PHPMailer-master/src/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupérer les données du formulaire
     $name = htmlspecialchars(trim($_POST['name']));
@@ -16,21 +24,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    // Configurer les en-têtes de l'email
-    $to = "votre_email@example.com"; // Remplacez par votre adresse email
-    $subject = "Nouveau message de $name";
-    $headers = "From: $email\r\n";
-    $headers .= "Reply-To: $email\r\n";
-    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+    // Configurer PHPMailer
+    $mail = new PHPMailer(true);
+    try {
+        // Paramètres du serveur
+        $mail->isSMTP();
+        $mail->Host = 'smtp.example.com'; // Remplacez par votre serveur SMTP
+        $mail->SMTPAuth = true;
+        $mail->Username = 'votre_email@example.com'; // Remplacez par votre adresse email
+        $mail->Password = 'votre_mot_de_passe'; // Remplacez par votre mot de passe
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
 
-    // Envoyer l'email
-    $mailSent = mail($to, $subject, $message, $headers);
+        // Destinataires
+        $mail->setFrom($email, $name);
+        $mail->addAddress('votre_email@example.com'); // Remplacez par votre adresse email
 
-    // Afficher un message de succès ou d'erreur
-    if ($mailSent) {
+        // Contenu de l'email
+        $mail->isHTML(false);
+        $mail->Subject = "Nouveau message de $name";
+        $mail->Body    = $message;
+
+        // Envoyer l'email
+        $mail->send();
         echo "Message envoyé avec succès.";
-    } else {
-        echo "Échec de l'envoi du message.";
+    } catch (Exception $e) {
+        echo "Échec de l'envoi du message. Erreur: {$mail->ErrorInfo}";
     }
 } else {
     echo "Méthode de requête non valide.";
