@@ -4,7 +4,7 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<html>
+<html lang="fr">
     <head>
         <title>Nicolas Saint-Léger</title>
         <meta charset="utf-8" />
@@ -15,6 +15,14 @@
         <noscript
             ><link rel="stylesheet" href="assets/css/noscript.css"
         /></noscript>
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function () {
+                if (window.location.pathname.endsWith(".html")) {
+                    var newPath = window.location.pathname.replace(".html", "");
+                    window.history.replaceState(null, "", newPath);
+                }
+            });
+        </script>
     </head>
     <body class="is-preload">
         <!-- Wrapper -->
