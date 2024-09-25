@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->SMTPAuth = true;
         $mail->Username = $config['smtp_username'];
         $mail->Password = $config['smtp_password'];
-        $mail->SMTPSecure = 'tls';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = $config['smtp_port'];
 
         // Destinataires
@@ -55,8 +55,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Envoyer l'email
         $mail->send();
 
-        // Rediriger vers la racine du site
-        header('Location: /');
+        // Rediriger vers la page précédente
+        $referer = $_SERVER['HTTP_REFERER'] ?? '/';
+        header("Location: $referer");
         exit;
     } catch (Exception $e) {
         echo "Échec de l'envoi du message. Erreur: {$mail->ErrorInfo}";
